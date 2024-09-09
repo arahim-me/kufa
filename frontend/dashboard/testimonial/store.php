@@ -4,72 +4,139 @@ session_start();
 
 include '../../../backend/config/db.php';
 
-if (isset($_POST['create'])) {
 
-    $title = $_POST['title'];
-    $description = $_POST['description'];
-    $icon = $_POST['icon'];
 
-    if ($title && $description && $icon) {
-        $query = "INSERT INTO services (title,description,icon) VALUES ('$title','$description','$icon')";
+// New File create in database
 
-        mysqli_query($db_connect, $query);
-        $_SESSION['service_complete'] = "New Service Added Successfull!";
-        header('location: services.php');
+if (isset($_POST['add'])) {
+    $name = $_POST['name'];
+    $designation = $_POST['designation'];
+    $text = $_POST['text'];
+    $image = $_FILES['image']['name'];
+    $tmp = $_FILES['image']['tmp_name'];
+    $explode = explode(".", $image);
+    $extension = end($explode);
+    $img_name = date("d-m-Y") . "-" . time() . '.' . $extension;
+    $localpath = "../../public/uploads/testimonials/" . $img_name;
+
+    if ($name && $designation && $text) {
+        if ($name && $designation && $text && $image) {
+            if (move_uploaded_file($tmp, $localpath)) {
+                $query = "INSERT INTO testimonials (name,designation,text,image) VALUES ('$name','$designation','$text', '$img_name')";
+                mysqli_query($db_connect, $query);
+                $_SESSION['create_success'] = "New Review Added Successfull!";
+                header('location: testimonial.php');
+            }
+
+        }
+
     } else {
-        header('location: services.php');
+        $_SESSION['create_fail'] = "New Review Added Fail!";
+        header('location: testimonial.php');
     }
 }
 
 
 if (isset($_GET['id'])) {
     $id = $_GET['id'];
-    $delete_query = "DELETE FROM services WHERE id='$id'";
+    $delete_query = "DELETE FROM testimonials WHERE id='$id'";
     mysqli_query($db_connect, $delete_query);
-    $_SESSION['service_complete_delete'] = "Service Delete Successfull!!";
-    header('location: services.php');
+    $_SESSION['delete_success'] = "Testimonial Deleted Successfull!";
+    header('location: testimonial.php');
 }
 
 
 if (isset($_GET['statusid'])) {
     $id = $_GET['statusid'];
 
-    $select_query = "SELECT * FROM services WHERE id='$id'";
+    $select_query = "SELECT * FROM testimonials WHERE id='$id'";
     $connect = mysqli_query($db_connect, $select_query);
     $service = mysqli_fetch_assoc($connect);
 
     if ($service['status'] == 'deactive') {
-        $update_query = "UPDATE services SET status='active' WHERE id='$id'";
+        $update_query = "UPDATE testimonials SET status='active' WHERE id='$id'";
         mysqli_query($db_connect, $update_query);
 
-        $_SESSION['service_status'] = "Service Status Update Successfull!!";
-        header('location: services.php');
+        $_SESSION['update_success'] = "The review's status successfully activated!";
+        header('location: testimonial.php');
     } else {
-        $update_query = "UPDATE services SET status='deactive' WHERE id='$id'";
+        $update_query = "UPDATE testimonials SET status='deactive' WHERE id='$id'";
         mysqli_query($db_connect, $update_query);
 
-        $_SESSION['service_status'] = "Service Status Update Successfull!!";
-        header('location: services.php');
+        $_SESSION['update_success'] = "The review's status successfully deactivated!";
+        header('location: testimonial.php');
     }
 
 }
 
 
 if (isset($_POST['update'])) {
-
     if (isset($_GET['update_id'])) {
         $id = $_GET['update_id'];
-        $title = $_POST['title'];
-        $description = $_POST['description'];
-        $icon = $_POST['icon'];
+        $query = "SELECT * FROM testimonials WHERE id='$id'";
+        $connect = mysqli_query($db_connect, $query);
+        $testimonial = mysqli_fetch_assoc($connect);
+        $oldimage = $testimonial['image'];
+        $existspath = "../../public/uploads/testimonials/" . $oldimage;
 
-        if ($title && $description && $icon) {
-            $query = "UPDATE services SET title='$title',description='$description',icon='$icon' WHERE id='$id'";
+        $name = $_POST['name'];
+        $text = $_POST['text'];
+        $designation = $_POST['designation'];
+        $image = $_FILES['image']['name'];
+
+        $tmp = $_FILES['image']['tmp_name'];
+        $explode = explode(".", $image);
+        $extension = end($explode);
+        $new_img = date("d-m-Y") . "-" . time() . '.' . $extension;
+        $localpath = "../../public/uploads/testimonials/" . $new_img;
+
+        if ($name) {
+            $query = "UPDATE testimonials SET name='$name' WHERE id='$id'";
             mysqli_query($db_connect, $query);
-            $_SESSION['service_complete'] = "Service Update Successfull!!";
-            header('location: services.php');
-        } else {
-            header('location: services.php');
+            $_SESSION['update_success'] = "Testimonial Updated Successfull!";
+            header('location: testimonial.php');
         }
+        if ($text) {
+            $query = "UPDATE testimonials SET text='$text' WHERE id='$id'";
+            mysqli_query($db_connect, $query);
+            $_SESSION['update_success'] = "Testimonial Updated Successfull!";
+            header('location: testimonial.php');
+        }
+        if ($designation) {
+            $query = "UPDATE testimonials SET designation='$designation' WHERE id='$id'";
+            mysqli_query($db_connect, $query);
+            $_SESSION['update_success'] = "Testimonial Updated Successfull!";
+            header('location: testimonial.php');
+        }
+        if ($image) {
+            if ($oldimage) {
+                if (file_exists($existspath)) {
+                    unlink($existspath);
+                }
+            }
+            if (move_uploaded_file($tmp, $localpath)) {
+                $query = "UPDATE testimonials SET image='$new_img' WHERE id='$id'";
+                mysqli_query($db_connect, $query);
+                $_SESSION['update_success'] = "Project Updated Successfull!";
+                header('location: testimonial.php');
+            }
+        }
+
+        if ($name && $text && $designation && $image) {
+            if ($oldimage) {
+                if (file_exists($existspath)) {
+                    unlink($existspath);
+                }
+            }
+            if (move_uploaded_file($tmp, $localpath)) {
+                $query = "UPDATE testimonials SET name='$name', text='$text', $designation='$designation' image='$new_img' WHERE id='$id'";
+                mysqli_query($db_connect, $query);
+                $_SESSION['update_success'] = "Testimonial Updated Successfull!";
+                header('location: testimonial.php');
+            }
+        }
+    } else {
+        $_SESSION['update_fail'] = "Testimonial Updated Fail!";
+        header('location: testimonial.php');
     }
 }

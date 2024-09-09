@@ -3,8 +3,8 @@
 include '../../../backend/config/db.php';
 include "../master/header.php";
 
-$service_query = "SELECT * FROM services";
-$services = mysqli_query($db_connect, $service_query);
+$query = "SELECT * FROM projects";
+$projects = mysqli_query($db_connect, $query);
 
 ?>
 
@@ -26,55 +26,17 @@ $services = mysqli_query($db_connect, $service_query);
 
 <!-- App content here -->
 
-<?php if (isset($_SESSION['service_complete'])): ?>
-    <div class="row">
-        <div class="col">
-            <div class="alert alert-custom row align-items-center" role="alert">
-                <div class="custom-alert-icon icon-dark"><i class="material-icons-outlined">done</i></div>
-                <div class="alert-content">
-                    <span class="alert-title m-0"><?= $_SESSION['service_complete'] ?></span>
-                </div>
-            </div>
-        </div>
-    </div>
-<?php endif;
-unset($_SESSION['service_complete']); ?>
 
+<?php
 
-<?php if (isset($_SESSION['service_complete_delete'])): ?>
-    <div class="row">
-        <div class="col">
-            <div class="alert alert-custom row align-items-center" role="alert">
-                <div class="custom-alert-icon icon-success"><i class="material-icons-outlined">done</i></div>
-                <div class="alert-content">
-                    <span class="alert-title m-0"><?= $_SESSION['service_complete_delete'] ?></span>
-                </div>
-            </div>
-        </div>
-    </div>
-<?php endif;
-unset($_SESSION['service_complete_delete']); ?>
-
-
-<?php if (isset($_SESSION['service_status'])): ?>
-    <div class="row">
-        <div class="col">
-            <div class="alert alert-custom row align-items-center" role="alert">
-                <div class="custom-alert-icon icon-success"><i class="material-icons-outlined">done</i></div>
-                <div class="alert-content">
-                    <span class="alert-title m-0"><?= $_SESSION['service_status'] ?></span>
-                </div>
-            </div>
-        </div>
-    </div>
-<?php endif;
-unset($_SESSION['service_status']); ?>
+include "../../dashboard/components/msg.php";
+?>
 
 <div class="row">
     <div class="col-12">
         <div class="card">
             <div class="card-header d-flex justify-content-between align-items-center">
-                <h5>Services</h5>
+                <h5>projects</h5>
                 <a href="create.php" name="passubtn" class="btn btn-primary"><i class="material-icons">add</i>Create</a>
             </div>
             <div class="card-body">
@@ -83,9 +45,10 @@ unset($_SESSION['service_status']); ?>
                         <thead class="table-dark">
                             <tr>
                                 <th scope="col">#</th>
-                                <th scope="col">Icon</th>
+                                <th scope="col">Image</th>
                                 <th scope="col">Status</th>
                                 <th scope="col">Title</th>
+                                <th scope="col">Category</th>
                                 <th scope="col">Description</th>
                                 <th scope="col">Action</th>
                             </tr>
@@ -93,32 +56,36 @@ unset($_SESSION['service_status']); ?>
                         <tbody>
                             <?php
                             $num = 1;
-                            foreach ($services as $service): ?>
+                            foreach ($projects as $project): ?>
                                 <tr>
                                     <th scope="row">
                                         <?= $num++ ?>
                                     </th>
                                     <td>
-                                        <i class="fa-2x <?= $service['icon'] ?>"></i>
+                                        <img src="../../public/uploads/projects/<?= $project['image'] ?>" alt=""
+                                            style="width: 150px; height:100%; object-fit:contain;">
                                     </td>
                                     <td>
-                                        <a href="store.php?statusid=<?= $service['id'] ?>"
-                                            class="<?= ($service['status'] == 'active') ? 'badge bg-success' : 'badge bg-danger' ?>">
-                                            <?= $service['status'] ?>
+                                        <a href="store.php?statusid=<?= $project['id'] ?>"
+                                            class="btn <?= ($project['status'] == 'active') ? 'badge bg-success' : 'badge bg-danger' ?>">
+                                            <?= $project['status'] ?>
                                         </a>
                                     </td>
                                     <td>
-                                        <?= $service['title'] ?>
+                                        <?= $project['title'] ?>
                                     </td>
                                     <td>
-                                        <?= $service['description'] ?>
+                                        <?= $project['category'] ?>
+                                    </td>
+                                    <td>
+                                        <?= $project['description'] ?>
                                     </td>
                                     <td>
                                         <div class="d-flex justify-content-around">
-                                            <a href="edit.php?editid=<?= $service['id'] ?>" class="text-primary">
+                                            <a href="edit.php?editid=<?= $project['id'] ?>" class="text-primary">
                                                 <i class="fa-2x fas fa-edit"></i>
                                             </a>
-                                            <a href="store.php?id=<?= $service['id'] ?>" class="text-danger ms-3">
+                                            <a href="store.php?deleteid=<?= $project['id'] ?>" class="text-danger ms-3">
                                                 <i class="fa-2x fas fa-trash"></i>
                                             </a>
                                         </div>

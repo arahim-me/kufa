@@ -9,6 +9,7 @@ include '../../../backend/config/db.php';
 if (isset($_POST['add'])) {
     $brand_name = $_POST['name'];
     $image = $_FILES['image']['name'];
+
     if ($brand_name && $image) {
         $tmp = $_FILES['image']['tmp_name'];
         $explode = explode(".", $image);
@@ -18,26 +19,17 @@ if (isset($_POST['add'])) {
         if (move_uploaded_file($tmp, $localpath)) {
             $query = "INSERT INTO brands (name, logo) VALUES ('$brand_name', '$img_name')";
             mysqli_query($db_connect, $query);
-            $_SESSION['brand_added_success'] = "Brand Successfully Added!";
-            header("location: brands.php");
-        } else {
-            $_SESSION['brand_added_failed'] = "Brand Added Failed!";
+            $_SESSION['create_success'] = "Brand Successfully Added!";
             header("location: brands.php");
         }
     } else {
-        $_SESSION['brand_added_failed'] = "Brand Added Failed!";
+        $_SESSION['create_fail'] = "Brand Added Failed!";
         header("location: brands.php");
     }
 }
 
 
-if (isset($_GET['deleteid'])) {
-    $id = $_GET['deleteid'];
-    $delete_query = "DELETE FROM brands WHERE id='$id'";
-    mysqli_query($db_connect, $delete_query);
-    $_SESSION['brand_delete_success'] = "The Brand Successfully Deleted!";
-    header('location: brands.php');
-}
+
 
 
 if (isset($_GET['statusid'])) {
@@ -64,33 +56,91 @@ if (isset($_GET['statusid'])) {
 }
 
 
+
+
+
 if (isset($_POST['update'])) {
 
     if (isset($_GET['editid'])) {
         $id = $_GET['editid'];
+        $query = "SELECT * FROM brands WHERE id='$id'";
+        $connect = mysqli_query($db_connect, $query);
+        $brand = mysqli_fetch_assoc($connect);
+        $oldlogo = $brand['logo'];
+        $existspath = "../../public/uploads/brands/" . $oldlogo;
+
         $name = $_POST['name'];
-        $logo = $_POST['logo'];
+        $logo = $_FILES['image']['name'];
+        $tmp = $_FILES['image']['tmp_name'];
+
+        
+
+        $explode = explode(".", $logo);
+        $extension = end($explode);
+        $new_img_name = date("d-m-Y") . "-" . time() . '.' . $extension;
+        $localpath = "../../public/uploads/brands/" . $new_img_name;
+
 
         if ($name) {
             $query = "UPDATE brands SET name='$name' WHERE id='$id'";
             mysqli_query($db_connect, $query);
-            $_SESSION['brand_update_success'] = "The Brand ( " . $name . ") Successfully Updated!";
+            $_SESSION['update_success'] = "The Brand ( " . $name . ") Successfully Updated!";
             header('location: brands.php');
         }
         if ($logo) {
-            $query = "UPDATE brands SET logo='$logo' WHERE id='$id'";
-            mysqli_query($db_connect, $query);
-            $_SESSION['brand_update_success'] = "The Brand ( " . $name . ") Successfully Updated!";
-            header('location: brands.php');
+            if ($oldlogo) {
+                if (file_exists($existspath)) {
+                    unlink($existspath);
+                }
+            }
+            if (move_uploaded_file($tmp, $localpath)) {
+                $query = "UPDATE brands SET  logo='$new_img_name' WHERE id='$id'";
+                mysqli_query($db_connect, $query);
+                $_SESSION['update_success'] = "The Brand ( " . $name . ") Successfully Updated!";
+                header('location: brands.php');
+            }
         }
         if ($name && $logo) {
-            $query = "UPDATE brands SET name='$name', logo='$logo' WHERE id='$id'";
-            mysqli_query($db_connect, $query);
-            $_SESSION['brand_update_success'] = "The Brand ( " . $name . ") Successfully Updated!";
-            header('location: brands.php');
+            if ($oldlogo) {
+                if (file_exists($existspath)) {
+                    unlink($existspath);
+                }
+            }
+            if (move_uploaded_file($tmp, $localpath)) {
+                $query = "UPDATE brands SET name='$name', logo='$new_img_name' WHERE id='$id'";
+                mysqli_query($db_connect, $query);
+                $_SESSION['update_success'] = "The Brand ( " . $name . ") Successfully Updated!";
+                header('location: brands.php');
+            }
         }
     } else {
         $_SESSION['brand_update_failed'] = "The Brand ( " . $name . ") Updated Fail!";
+        header('location: brands.php');
+    }
+}
+
+
+if (isset($_GET['deleteid'])) {
+    $id = $_GET['deleteid'];
+
+    $query = "SELECT * FROM brands WHERE id='$id'";
+    $connect = mysqli_query($db_connect, $query);
+    $brand = mysqli_fetch_assoc($connect);
+    $oldlogo = $brand['logo'];
+    $existspath = "../../public/uploads/brands/" . $oldlogo;
+
+    if ($oldlogo) {
+        if (file_exists($existspath)) {
+            unlink($existspath);
+        }
+    }
+    if ($id) {
+        $query = "DELETE FROM brands WHERE id='$id'";
+        mysqli_query($db_connect, $query);
+        $_SESSION['delete_success'] = "The Brand Successfully Deleted!";
+        header('location: brands.php');
+    } else {
+        $_SESSION['delete_fail'] = "Project Deleted Fail!";
         header('location: brands.php');
     }
 }

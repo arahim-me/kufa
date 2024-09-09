@@ -10,9 +10,9 @@ include "../../public/fonts/fonts.php";
             <div class="row">
                 <div class="col">
                     <div class="page-description">
-                        <h1>Create New Services</h1>
+                        <h1>Create New Project</h1>
                     </div>
-                </div>                
+                </div>
             </div>
 
             <!-- App content here -->
@@ -21,30 +21,27 @@ include "../../public/fonts/fonts.php";
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h3>service</h3>
+                            <h3>Project</h3>
                         </div>
-                        <form action="store.php" method="POST">
+                        <form action="store.php" method="POST" enctype="multipart/form-data">
                             <div class="card-body">
-                                <label for="exampleInputEmail1" class="form-label">Title</label>
-                                <input type="text" name="title" class="form-control" id="exampleInputEmail1"
-                                    aria-describedby="emailHelp">
-                                <label for="exampleInputEmail1" class="form-label">Description</label>
-                                <textarea type="text" rows="5" name="description" class="form-control"> </textarea>
-                                <label for="exampleInputEmail1" class="form-label">Icon</label>
-                                <input type="text" readonly name="icon" class="form-control" id="inputIcon"
-                                    aria-describedby="emailHelp">
-                                <div class="card my-3">
-                                    <div class="card-header">
-                                        <h5>Select Icons,</h5>
-                                    </div>
-                                    <div class="card-body" style="overflow-y: scroll; height:500px;">
-                                        <?php foreach ($fonts as $font): ?>
-                                            <span class="m-2 fa-2x">
-                                                <i class="<?= $font ?>" onclick="myFun(event)"></i>
-                                            </span>
-                                        <?php endforeach; ?>
-                                    </div>
-                                </div>
+                                <label for="title" class="form-label">Title</label>
+                                <input type="text" name="title" class="form-control" id="title"
+                                    placeholder="Project name...">
+                                <label for="categories" class="form-label">Categories</label>
+                                <input type="text" name="category" class="form-control" id="categories"
+                                    placeholder="Project catrgory...">
+                                <label for="description" class="form-label">Description</label>
+                                <textarea type="text" rows="5" name="description" class="form-control" id="description"
+                                    placeholder="Project description..."></textarea>
+                                <picture class="d-block my-4 d-flex justify-content-center">
+                                    <img id="displayImg" src="../../public/uploads/projects/default.jpg"
+                                        alt="Demo Image" style="width: 100%; height:500px; object-fit:contain;">
+                                </picture>
+                                <label for="image" class="form-label">Project's image</label>
+                                <input type="file" name="image" class="form-control" id="inputIcon"
+                                    placeholder="Project image..."
+                                    onchange="document.getElementById('displayImg').src = window.URL.createObjectURL(this.files[0])">
 
                                 <button type="submit" name="create" class="btn btn-primary mt-3"><i
                                         class="material-icons">add</i>Create</button>

@@ -19,6 +19,9 @@
             <li class="active-page">
                 <a href="../home/home.php" class="active"><i class="material-icons-two-tone">dashboard</i>Dashboard</a>
             </li>
+            <li class="active-page">
+                <a href="../home/home.php" class="active"><i class="material-icons-two-tone">person</i>Profile</a>
+            </li>
             <li>
                 <a href="../banner/banner.php"><i class="material-icons-two-tone">inbox</i>Banner</a>
             </li>
@@ -26,19 +29,19 @@
                 <a href="../about/about.php"><i class="material-icons-two-tone">inbox</i>About</a>
             </li>
             <li>
-                <a href="../services/services.php"><i class="material-icons-two-tone">inbox</i>Services</a>
+                <a href="../services/services.php"><i class="material-icons-two-tone">support_agent</i>Services</a>
             </li>
             <li>
-                <a href="../projects/projects.php"><i class="material-icons-two-tone">inbox</i>Projects</a>
+                <a href="../projects/projects.php"><i class="material-icons-two-tone">workspaces</i>Projects</a>
             </li>
             <li>
-                <a href="../experiences/experiences.php"><i class="material-icons-two-tone">inbox</i>Experiences</a>
+                <a href="../experiences/experiences.php"><i class="material-icons-two-tone">sync</i>Experiences</a>
             </li>
             <li>
-                <a href="../testimonial/testimonial.php"><i class="material-icons-two-tone">inbox</i>Reviews</a>
+                <a href="../testimonial/testimonial.php"><i class="material-icons-two-tone">reviews</i>Reviews</a>
             </li>
             <li>
-                <a href="../brands/brands.php"><i class="material-icons-two-tone">inbox</i>Brands</a>
+                <a href="../brands/brands.php"><i class="material-icons-two-tone">tab</i>Brands</a>
             </li>
             <li>
                 <a href="../contact/contact.php"><i class="material-icons-two-tone">inbox</i>Contact</a>

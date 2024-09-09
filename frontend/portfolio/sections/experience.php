@@ -6,7 +6,7 @@ $experiences = mysqli_query($db_connect, $query);
 <section class="fact-area">
     <div class="container">
         <div class="fact-wrap">
-            <div class="row justify-content-between">
+            <div class="row justify-content-center">
                 <?php foreach ($experiences as $experience): ?>
                     <div class="col-xl-2 col-lg-3 col-sm-6">
                         <div class="fact-box text-center mb-50">

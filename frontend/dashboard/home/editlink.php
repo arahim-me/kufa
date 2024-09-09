@@ -3,11 +3,11 @@ include '../../../backend/config/db.php';
 include "../master/header.php";
 include "../../public/fonts/fonts.php";
 
-if (isset($_GET['editid'])) {
-    $id = $_GET['editid'];
-    $select_query = "SELECT * FROM services WHERE id='$id'";
+if (isset($_GET['editlink'])) {
+    $id = $_GET['editlink'];
+    $select_query = "SELECT * FROM links WHERE id='$id'";
     $connect = mysqli_query($db_connect, $select_query);
-    $service = mysqli_fetch_assoc($connect);
+    $link = mysqli_fetch_assoc($connect);
 }
 
 ?>
@@ -15,7 +15,7 @@ if (isset($_GET['editid'])) {
 <div class="row">
     <div class="col">
         <div class="page-description">
-            <h1>Edit <?= $service['title'] ?> Service</h1>
+            <h1>Edit <?= $link['name'] ?> link</h1>
         </div>
     </div>
 </div>
@@ -25,33 +25,32 @@ if (isset($_GET['editid'])) {
     <div class="col-12">
         <div class="card d-flex gap-3">
             <div class="card-header">
-                <h3>service</h3>
+                <h3>link</h3>
             </div>
-            <form action="store.php?update_id=<?= $service['id'] ?>" method="POST">
+            <form action="store.php?editlink=<?= $link['id'] ?>" method="POST">
                 <div class="card-body">
-                    <h5 class="form-label">Title</h5>
-                    <input type="text" name="title" class="form-control" id="exampleInputEmail1"
-                        aria-describedby="emailHelp" value="<?= $service['title'] ?>">
-                    <h5 class="form-label mt-5">Description</h5>
-                    <textarea type="text" rows="5" name="description"
-                        class="form-control"> <?= $service['description'] ?> </textarea>
+                    <h5 class="form-label">Site's Name</h5>
+                    <input type="text" name="name" class="form-control" id="exampleInputEmail1"
+                        aria-describedby="emailHelp" value="<?= $link['name'] ?>">
+                    <h5 class="form-label mt-5">Link's Address</h5>
+                    <input type="text" name="address" class="form-control" value="<?= $link['address']?>">
                     <h5 class="form-label mt-5">Icon</h5>
                     <input type="text" readonly name="icon" class="form-control" id="inputIcon"
-                        value="<?= $service['icon'] ?>">
+                        value="<?= $link['icon'] ?>">
                     <div class="card my-3">
                         <div class="card-header">
                             <h5>Select Icons,</h5>
                         </div>
                         <div class="card-body" style="overflow-y: scroll; height:500px;">
-                            <?php foreach ($icons as $font): ?>
+                            <?php foreach ($icons as $icon): ?>
                                 <span class="m-2 fa-2x">
-                                    <i class="<?= $font ?>" onclick="myFun(event)"></i>
+                                    <i class="<?= $icon ?>" onclick="myFun(event)"></i>
                                 </span>
                             <?php endforeach; ?>
                         </div>
                     </div>
 
-                    <button type="submit" name="update" class="btn btn-primary mt-3"><i
+                    <button type="submit" name="editlink" class="btn btn-primary mt-3"><i
                             class="material-icons">add</i>Update</button>
                 </div>
             </form>

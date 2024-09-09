@@ -1,40 +1,25 @@
+<?php
 
+// $section_path = './frontend/portfolio/sections/';
 
-            <!-- brand-area -->
-            <div class="barnd-area pt-100 pb-100">
-                <div class="container">
-                    <div class="row brand-active">
-                        <div class="col-xl-2">
-                            <div class="single-brand">
-                                <img src="./frontend/portfolio/img/brand/brand_img01.png" alt="img">
-                            </div>
-                        </div>
-                        <div class="col-xl-2">
-                            <div class="single-brand">
-                                <img src="./frontend/portfolio/img/brand/brand_img02.png" alt="img">
-                            </div>
-                        </div>
-                        <div class="col-xl-2">
-                            <div class="single-brand">
-                                <img src="./frontend/portfolio/img/brand/brand_img03.png" alt="img">
-                            </div>
-                        </div>
-                        <div class="col-xl-2">
-                            <div class="single-brand">
-                                <img src="./frontend/portfolio/img/brand/brand_img04.png" alt="img">
-                            </div>
-                        </div>
-                        <div class="col-xl-2">
-                            <div class="single-brand">
-                                <img src="./frontend/portfolio/img/brand/brand_img05.png" alt="img">
-                            </div>
-                        </div>
-                        <div class="col-xl-2">
-                            <div class="single-brand">
-                                <img src="./frontend/portfolio/img/brand/brand_img03.png" alt="img">
-                            </div>
-                        </div>
-                    </div>
+include './backend/config/db.php';
+$query = "SELECT * FROM brands WHERE status='active'";
+$brands = mysqli_query($db_connect, $query);
+
+?>
+
+<!-- brand-area -->
+<div class="barnd-area pt-100 pb-100">
+    <div class="container">
+        <div class="row brand-active">
+
+            <?php foreach ($brands as $brand): ?>
+                <div class="single-brand">
+                    <img src="./frontend/public/uploads/brands/<?= $brand['logo'] ?>" alt="img">
                 </div>
-            </div>
-            <!-- brand-area-end -->
+            <?php endforeach; ?>
+
+        </div>
+    </div>
+</div>
+<!-- brand-area-end -->

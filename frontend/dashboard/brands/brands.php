@@ -26,123 +26,10 @@ $brands = mysqli_query($db_connect, $query);
 
 <!-- App content here -->
 
-<?php if (isset($_SESSION['brand_added_success'])): ?>
-    <div class="row">
-        <div class="col">
-            <div class="alert alert-custom row align-items-center" role="alert">
-                <div class="custom-alert-icon icon-dark"><i class="material-icons-outlined">done</i></div>
-                <div class="alert-content">
-                    <span class="alert-title m-0 text-success"><?= $_SESSION['brand_added_success'] ?></span>
-                </div>
-            </div>
-        </div>
-    </div>
-<?php endif;
-unset($_SESSION['brand_added_success']); ?>
+<?php
 
-<?php if (isset($_SESSION['brand_added_failed'])): ?>
-    <div class="row">
-        <div class="col">
-            <div class="alert alert-custom row align-items-center" role="alert">
-                <div class="custom-alert-icon icon-danger"><i class="material-icons-outlined">close</i></div>
-                <div class="alert-content">
-                    <span class="alert-title m-0 text-danger"><?= $_SESSION['brand_added_failed'] ?></span>
-                </div>
-            </div>
-        </div>
-    </div>
-<?php endif;
-unset($_SESSION['brand_added_failed']); ?>
-
-
-<?php if (isset($_SESSION['brand_delete_success'])): ?>
-    <div class="row">
-        <div class="col">
-            <div class="alert alert-custom row align-items-center" role="alert">
-                <div class="custom-alert-icon icon-danger"><i class="material-icons-outlined fa-2x">delete</i></div>
-                <div class="alert-content">
-                    <span class="alert-title m-0 text-danger"><?= $_SESSION['brand_delete_success'] ?></span>
-                </div>
-            </div>
-        </div>
-    </div>
-<?php endif;
-unset($_SESSION['brand_delete_success']); ?>
-
-<?php if (isset($_SESSION['brand_delete_failed'])): ?>
-    <div class="row">
-        <div class="col">
-            <div class="alert alert-custom row align-items-center" role="alert">
-                <div class="custom-alert-icon icon-danger"><i class="material-icons-outlined fa-2x">close</i></div>
-                <div class="alert-content">
-                    <span class="alert-title m-0 text-danger"><?= $_SESSION['brand_delete_failed'] ?></span>
-                </div>
-            </div>
-        </div>
-    </div>
-<?php endif;
-unset($_SESSION['brand_delete_failed']); ?>
-
-
-<?php if (isset($_SESSION['brand_update_success'])): ?>
-    <div class="row">
-        <div class="col">
-            <div class="alert alert-custom row align-items-center" role="alert">
-                <div class="custom-alert-icon icon-success"><i class="material-icons-outlined fa-2x">done</i></div>
-                <div class="alert-content">
-                    <span class="alert-title m-0 text-success"><?= $_SESSION['brand_update_success'] ?></span>
-                </div>
-            </div>
-        </div>
-    </div>
-<?php endif;
-unset($_SESSION['brand_update_success']); ?>
-
-
-<?php if (isset($_SESSION['brand_update_failed'])): ?>
-    <div class="row">
-        <div class="col">
-            <div class="alert alert-custom row align-items-center" role="alert">
-                <div class="custom-alert-icon icon-danger"><i class="material-icons-outlined fa-2x">close</i></div>
-                <div class="alert-content">
-                    <span class="alert-title m-0 text-danger"><?= $_SESSION['brand_update_failed'] ?></span>
-                </div>
-            </div>
-        </div>
-    </div>
-<?php endif;
-unset($_SESSION['brand_update_failed']); ?>
-
-
-
-
-<?php if (isset($_SESSION['brand_status_active'])): ?>
-    <div class="row">
-        <div class="col">
-            <div class="alert alert-custom row align-items-center" role="alert">
-                <div class="custom-alert-icon icon-success"><i class="material-icons-outlined">done</i></div>
-                <div class="alert-content">
-                    <span class="alert-title m-0 text-success"><?= $_SESSION['brand_status_active'] ?></span>
-                </div>
-            </div>
-        </div>
-    </div>
-<?php endif;
-unset($_SESSION['brand_status_active']); ?>
-
-<?php if (isset($_SESSION['brand_status_deactive'])): ?>
-    <div class="row">
-        <div class="col">
-            <div class="alert alert-custom row align-items-center" role="alert">
-                <div class="custom-alert-icon icon-danger"><i class="material-icons-outlined">close</i></div>
-                <div class="alert-content">
-                    <span class="alert-title m-0 text-danger"><?= $_SESSION['brand_status_deactive'] ?></span>
-                </div>
-            </div>
-        </div>
-    </div>
-<?php endif;
-unset($_SESSION['brand_status_deactive']); ?>
+include "../../dashboard/components/msg.php";
+?>
 
 <div class="row">
     <div class="col-12">
@@ -172,7 +59,7 @@ unset($_SESSION['brand_status_deactive']); ?>
                                         <?= $num++ ?>
                                     </th>
                                     <td>
-                                        <img src="../../public/uploads/brands/<?= $brand['logo']?>" alt="">
+                                        <img src="../../public/uploads/brands/<?= $brand['logo']  ?>" class="img-fluid" style="width: 200px; height:100%; object-fit:contain;" alt="">
                                     </td>
                                     <td>
                                         <a href="store.php?statusid=<?= $brand['id'] ?>"
