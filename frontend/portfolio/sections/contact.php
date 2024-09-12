@@ -22,10 +22,10 @@
                         </div>
                         <div class="col-lg-6">
                             <div class="contact-form">
-                                <form action="#">
-                                    <input type="text" placeholder="your name *">
-                                    <input type="email" placeholder="your email *">
-                                    <textarea name="message" id="message" placeholder="your message *"></textarea>
+                                <form action="mail.php">
+                                    <input type="text" name="name" placeholder="your name *">
+                                    <input type="email" name="email" placeholder="your email *">
+                                    <textarea name="body" id="message" placeholder="your message *"></textarea>
                                     <button class="btn">SEND</button>
                                 </form>
                             </div>

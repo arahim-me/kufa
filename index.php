@@ -1,5 +1,4 @@
 <?php
-
 $section_path = './frontend/portfolio/sections/';
 
 // include'./backend/config/db.php';

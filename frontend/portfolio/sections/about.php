@@ -4,7 +4,7 @@
 
 include './backend/config/db.php';
 $query = "SELECT * FROM education WHERE status='active'";
-$skills = mysqli_query($db_connect, $query);
+$skills = mysqli_query( $db_connect,  $query);
 
 ?>
 

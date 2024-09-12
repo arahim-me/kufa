@@ -5,7 +5,7 @@ session_start();
 
 include '../../../backend/config/db.php';
 
-
+// Add new brand here
 if (isset($_POST['add'])) {
     $brand_name = $_POST['name'];
     $image = $_FILES['image']['name'];
@@ -31,7 +31,7 @@ if (isset($_POST['add'])) {
 
 
 
-
+// Edit brand status here
 if (isset($_GET['statusid'])) {
     $id = $_GET['statusid'];
 
@@ -56,7 +56,7 @@ if (isset($_GET['statusid'])) {
 }
 
 
-
+// Brand update here
 
 
 if (isset($_POST['update'])) {
@@ -73,7 +73,7 @@ if (isset($_POST['update'])) {
         $logo = $_FILES['image']['name'];
         $tmp = $_FILES['image']['tmp_name'];
 
-        
+
 
         $explode = explode(".", $logo);
         $extension = end($explode);
@@ -81,26 +81,20 @@ if (isset($_POST['update'])) {
         $localpath = "../../public/uploads/brands/" . $new_img_name;
 
 
-        if ($name) {
-            $query = "UPDATE brands SET name='$name' WHERE id='$id'";
-            mysqli_query($db_connect, $query);
-            $_SESSION['update_success'] = "The Brand ( " . $name . ") Successfully Updated!";
-            header('location: brands.php');
-        }
-        if ($logo) {
+
+        if ($name || $logo) {
             if ($oldlogo) {
                 if (file_exists($existspath)) {
                     unlink($existspath);
                 }
             }
             if (move_uploaded_file($tmp, $localpath)) {
-                $query = "UPDATE brands SET  logo='$new_img_name' WHERE id='$id'";
+                $query = "UPDATE brands SET name='$name', logo='$new_img_name' WHERE id='$id'";
                 mysqli_query($db_connect, $query);
                 $_SESSION['update_success'] = "The Brand ( " . $name . ") Successfully Updated!";
                 header('location: brands.php');
             }
-        }
-        if ($name && $logo) {
+        } else {
             if ($oldlogo) {
                 if (file_exists($existspath)) {
                     unlink($existspath);

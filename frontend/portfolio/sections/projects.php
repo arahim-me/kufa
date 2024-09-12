@@ -28,9 +28,9 @@ $projects = mysqli_query($db_connect, $query);
 						</div>
 						<div class="speaker-overlay">
 							<span><?= $project['category'] ?></span>
-							<h4><a href="./single-project.php?projectid=<?= $project['id'] ?>"><?= $project['title'] ?></a>
+							<h4><a href="./display-project.php?projectid=<?= $project['id'] ?>"><?= $project['title'] ?></a>
 							</h4>
-							<a href="./single-project.php?projectid=<?= $project['id'] ?>" class="arrow-btn">More information
+							<a href="./display-project.php?projectid=<?= $project['id'] ?>" class="arrow-btn">More information
 								<span></span></a>
 						</div>
 					</div>

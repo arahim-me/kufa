@@ -1,7 +1,9 @@
+<?php session_start(); ?>
+
 <?php $assets = './../assets/' ?>
 <?php $login_page = './login.php' ?>
 
-<?php session_start(); ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -79,9 +81,10 @@
                     <label for="signUpEmail" class="form-label">Email address</label>
                     <!-- <input type="email" name="email" class="form-control m-b-md" id="signUpEmail"
                         placeholder="example@kufa.com"> -->
-                        
-                    <input type="email" class="form-control m-b-md" placeholder="example@neptune.com" name="email" value="<?= (isset($_SESSION['old_email'])) ? $_SESSION['old_email'] : '';
-                    unset($_SESSION['old_email']) ?>">
+
+                    <input type="email" class="form-control m-b-md" placeholder="example@neptune.com" name="email"
+                        value="<?= (isset($_SESSION['old_email'])) ? $_SESSION['old_email'] : '';
+                        unset($_SESSION['old_email']) ?>">
                     <?php if (isset($_SESSION['email_error'])) { ?>
                         <div id="emailHelp" class="form-text m-b-md text-danger"><?php echo $_SESSION['email_error'] ?>*
                         </div>

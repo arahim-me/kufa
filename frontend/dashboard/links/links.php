@@ -2,8 +2,9 @@
 
 include '../../../backend/config/db.php';
 include "../master/header.php";
-$query = "SELECT * FROM admins";
-$admins = mysqli_query($db_connect, $query);
+
+$link_query = "SELECT * FROM links";
+$links = mysqli_query($db_connect, $link_query);
 
 ?>
 
@@ -12,7 +13,7 @@ $admins = mysqli_query($db_connect, $query);
 <div class="row">
     <div class="col">
         <div class="page-description">
-            <h1>Dashboard</h1>
+            <h1>Useful Links</h1>
         </div>
     </div>
     <div class="col">
@@ -30,7 +31,9 @@ $admins = mysqli_query($db_connect, $query);
     <div class="col-12">
         <div class="card">
             <div class="card-header d-flex justify-content-between align-items-center">
-                <h5>Our Admins</h5>
+                <h5>Social Links</h5>
+                <a href="createlink.php" name="createlink" class="btn btn-primary"><i
+                        class="material-icons">add</i>Create</a>
             </div>
             <div class="card-body">
                 <div class="example-content">
@@ -38,33 +41,45 @@ $admins = mysqli_query($db_connect, $query);
                         <thead class="table-dark">
                             <tr>
                                 <th scope="col">#</th>
+                                <th scope="col">Icon</th>
+                                <th scope="col">Status</th>
                                 <th scope="col">Name</th>
-                                <th scope="col">Email</th>
-                                <th scope="col">Phone No.</th>
+                                <th scope="col">Link</th>
                                 <th scope="col">Action</th>
                             </tr>
                         </thead>
                         <tbody>
                             <?php
                             $num = 1;
-                            foreach ($admins as $admin): ?>
+                            foreach ($links as $link): ?>
                                 <tr>
                                     <th scope="row">
                                         <?= $num++ ?>
                                     </th>
                                     <td>
-                                        <?= $admin['name'] ?>
+                                        <i class="fa-2x <?= $link['icon'] ?>"></i>
                                     </td>
                                     <td>
-                                        <?= $admin['email'] ?>
-                                    </td>
-                                    <td>
-                                        <?= (!$admin['cel']) ? 'Not set yet' : '0' . $admin['cel'] ?>
-                                    </td>
-                                    <td>
-                                        <a href="store.php?delete=<?= $admin['id'] ?>" class="text-danger ms-3">
-                                            <i class="fa-2x fas fa-trash"></i>
+                                        <a href="store.php?linkstatus=<?= $link['id'] ?>"
+                                            class="btn <?= ($link['status'] == 'active') ? 'badge bg-success' : 'badge bg-danger' ?>">
+                                            <?= $link['status'] ?>
                                         </a>
+                                    </td>
+                                    <td>
+                                        <?= $link['name'] ?>
+                                    </td>
+                                    <td>
+                                        <?= $link['address'] ?>
+                                    </td>
+                                    <td>
+                                        <div class="d-flex justify-content-around">
+                                            <a href="editlink.php?editlink=<?= $link['id'] ?>" class="text-primary">
+                                                <i class="fa-2x fas fa-edit"></i>
+                                            </a>
+                                            <a href="store.php?deletelink=<?= $link['id'] ?>" class="text-danger ms-3">
+                                                <i class="fa-2x fas fa-trash"></i>
+                                            </a>
+                                        </div>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>

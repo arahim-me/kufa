@@ -1,8 +1,9 @@
 <?php
 include './backend/config/db.php';
-$query = "SELECT * FROM links WHERE status= 'active'";
 
-$links = mysqli_query($db_connect, $query);
+$link_query = "SELECT * FROM links WHERE status= 'active'";
+$links = mysqli_query($db_connect, $link_query);
+
 ?>
 
 <!-- main-area -->
@@ -15,14 +16,14 @@ $links = mysqli_query($db_connect, $query);
                 <div class="col-xl-7 col-lg-6">
                     <div class="banner-content">
                         <h6 class="wow fadeInUp" data-wow-delay="0.2s">HELLO!</h6>
-                        <h2 class="wow fadeInUp" data-wow-delay="0.4s">I am Will Smith</h2>
-                        <p class="wow fadeInUp" data-wow-delay="0.6s">I'm Will Smith, professional web developer with
+                        <h2 class="wow fadeInUp" data-wow-delay="0.4s">I am Abdur Rahim </h2>
+                        <p class="wow fadeInUp" data-wow-delay="0.6s">I'm a professional web developer with
                             long time experience in this field​.</p>
                         <div class="banner-social wow fadeInUp" data-wow-delay="0.8s">
                             <ul>
-                                <?php foreach($links as $link):?>
-                                    <li><a href="<?= $link['address']?>"><i class="<?= $link['icon']?>"></i></a></li>
-                                <?php endforeach;?>
+                                <?php foreach ($links as $link): ?>
+                                    <li><a href="<?= $link['address'] ?>"><i class="<?= $link['icon'] ?>"></i></a></li>
+                                <?php endforeach; ?>
                             </ul>
                         </div>
                         <a href="#" class="btn wow fadeInUp" data-wow-delay="1s">SEE PORTFOLIOS</a>

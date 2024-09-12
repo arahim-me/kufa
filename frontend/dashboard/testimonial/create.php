@@ -35,7 +35,7 @@ include "../../public/fonts/fonts.php";
                                 <textarea type="text" rows="5" name="text" class="form-control" id="description"
                                     placeholder="Review text..."></textarea>
                                 <picture class="d-block my-4 d-flex justify-content-center">
-                                    <img id="displayImg" src="../../public/uploads/projects/default.jpg"
+                                    <img id="displayImg" src="../../public/uploads/projects/default.png"
                                         alt="Demo Image" style="width: 100%; height:500px; object-fit:contain;">
                                 </picture>
                                 <label for="image" class="form-label">Image</label>

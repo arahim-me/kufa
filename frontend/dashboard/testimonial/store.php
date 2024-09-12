@@ -36,14 +36,31 @@ if (isset($_POST['add'])) {
     }
 }
 
-
 if (isset($_GET['id'])) {
     $id = $_GET['id'];
-    $delete_query = "DELETE FROM testimonials WHERE id='$id'";
-    mysqli_query($db_connect, $delete_query);
-    $_SESSION['delete_success'] = "Testimonial Deleted Successfull!";
-    header('location: testimonial.php');
+
+    $query = "SELECT * FROM testimonials WHERE id='$id'";
+    $connect = mysqli_query($db_connect, $query);
+    $testimonial = mysqli_fetch_assoc($connect);
+    $oldimage = $testimonial['image'];
+    $existspath = "../../public/uploads/testimonials/" . $oldimage;
+
+    if ($oldimage) {
+        if (file_exists($existspath)) {
+            unlink($existspath);
+        }
+    }
+    if ($id) {
+        $query = "DELETE FROM testimonials WHERE id='$id'";
+        mysqli_query($db_connect, $query);
+        $_SESSION['delete_success'] = "The Testimonial Deleted Successfull!";
+        header('location: Testimonial.php');
+    } else {
+        $_SESSION['delete_fail'] = "The Testimonial Deleted Fail!";
+        header('location: Testimonial.php');
+    }
 }
+
 
 
 if (isset($_GET['statusid'])) {

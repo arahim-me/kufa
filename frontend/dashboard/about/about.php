@@ -1,13 +1,16 @@
 <?php
-
+// include '../../public/uploads/testimonials/08-09-2024-1725798929.png'
 include '../../../backend/config/db.php';
 include "../master/header.php";
+$query = "SELECT COUNT(*) FROM about";
+$abouts = mysqli_query($db_connect, $query);
+$about = mysqli_fetch_assoc($abouts);
 
-$service_query = "SELECT * FROM services";
-$services = mysqli_query($db_connect, $service_query);
+
 
 ?>
 
+<?php include '../components/msg.php'; ?>
 
 <div class="row">
     <div class="col">
@@ -26,107 +29,83 @@ $services = mysqli_query($db_connect, $service_query);
 
 <!-- App content here -->
 
-<?php if (isset($_SESSION['service_complete'])): ?>
-    <div class="row">
-        <div class="col">
-            <div class="alert alert-custom row align-items-center" role="alert">
-                <div class="custom-alert-icon icon-dark"><i class="material-icons-outlined">done</i></div>
-                <div class="alert-content">
-                    <span class="alert-title m-0"><?= $_SESSION['service_complete'] ?></span>
-                </div>
-            </div>
-        </div>
-    </div>
-<?php endif;
-unset($_SESSION['service_complete']); ?>
-
-
-<?php if (isset($_SESSION['service_complete_delete'])): ?>
-    <div class="row">
-        <div class="col">
-            <div class="alert alert-custom row align-items-center" role="alert">
-                <div class="custom-alert-icon icon-success"><i class="material-icons-outlined">done</i></div>
-                <div class="alert-content">
-                    <span class="alert-title m-0"><?= $_SESSION['service_complete_delete'] ?></span>
-                </div>
-            </div>
-        </div>
-    </div>
-<?php endif;
-unset($_SESSION['service_complete_delete']); ?>
-
-
-<?php if (isset($_SESSION['service_status'])): ?>
-    <div class="row">
-        <div class="col">
-            <div class="alert alert-custom row align-items-center" role="alert">
-                <div class="custom-alert-icon icon-success"><i class="material-icons-outlined">done</i></div>
-                <div class="alert-content">
-                    <span class="alert-title m-0"><?= $_SESSION['service_status'] ?></span>
-                </div>
-            </div>
-        </div>
-    </div>
-<?php endif;
-unset($_SESSION['service_status']); ?>
-
 <div class="row">
-    <div class="col-12">
+    <div class="col-xl-6 col-md-6 col-sm-12">
         <div class="card">
-            <div class="card-header d-flex justify-content-between align-items-center">
-                <h5>Services</h5>
-                <a href="create.php" name="passubtn" class="btn btn-primary"><i class="material-icons">add</i>Create</a>
+            <div class="card-header d-flex justify-content-center align-items-center">
+                <h5>Thees content show your about and banner section</h5>
             </div>
-            <div class="card-body">
-                <div class="example-content">
-                    <table class="table m-0">
-                        <thead class="table-dark">
-                            <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">Icon</th>
-                                <th scope="col">Status</th>
-                                <th scope="col">Title</th>
-                                <th scope="col">Description</th>
-                                <th scope="col">Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php
-                            $num = 1;
-                            foreach ($services as $service): ?>
-                                <tr>
-                                    <th scope="row">
-                                        <?= $num++ ?>
-                                    </th>
-                                    <td>
-                                        <i class="fa-2x <?= $service['icon'] ?>"></i>
-                                    </td>
-                                    <td>
-                                        <a href="store.php?statusid=<?= $service['id'] ?>"
-                                            class="<?= ($service['status'] == 'active') ? 'badge bg-success' : 'badge bg-danger' ?>">
-                                            <?= $service['status'] ?>
-                                        </a>
-                                    </td>
-                                    <td>
-                                        <?= $service['title'] ?>
-                                    </td>
-                                    <td>
-                                        <?= $service['description'] ?>
-                                    </td>
-                                    <td>
-                                        <div class="d-flex justify-content-around">
-                                            <a href="edit.php?editid=<?= $service['id'] ?>" class="text-primary">
-                                                <i class="fa-2x fas fa-edit"></i>
-                                            </a>
-                                            <a href="store.php?id=<?= $service['id'] ?>" class="text-danger ms-3">
-                                                <i class="fa-2x fas fa-trash"></i>
-                                            </a>
-                                        </div>
-                                    </td>
-                                </tr>
-                            <?php endforeach; ?>
-                        </tbody>
-                    </table>
+        </div>
+        <div class="card">
+            <div class="card-header d-flex justify-content-center align-items-center">
+                <h5>Change Your short-bio</h5>
+            </div>
+            <div class="auth-info p-5 d-flex flex-column gap-4">
+                <span>
+                    <span><?= $about['short-bio'] ?></span>
+                </span>
+                <form action="store.php" method="POST" class="d-flex flex-column gap-4">
+                    <input type="text" autocomplete="off" name="phone" placeholder="Enter your short bio..."
+                        class="form-control">
+                    <input type="submit" class="btn btn-danger" value="change" name="editphone">
+                </form>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header d-flex justify-content-center align-items-center">
+                <h5>Change Your Banner picture</h5>
+            </div>
+            <div class="auth-info p-5 gap-5 d-flex flex-column align-items-center">
+                <div class="d-flex">
+                    <img class="img img-fluid" id="displayImg" style="max-width: 200px; height:100%;"
+                        src="../../public/uploads/about/<?= $about['banner-img'] ?>" alt="">
+                </div>
+                <div class="d-flex" style="max-width: 380px;">
+                    <form action="store.php" method="POST" enctype="multipart/form-data"
+                        class="d-flex justify-content-center align-items-center">
+                        <input type="file" name="avatar" class="form-control"
+                            onchange="document.getElementById('displayImg').src = window.URL.createObjectURL(this.files[0])">
+                        <input type="submit" class="btn btn-danger ms-4" value="change" name="editavatar">
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header d-flex justify-content-center align-items-center">
+                <h5>Change Your long-bio</h5>
+            </div>
+            <div class="auth-info p-5 d-flex flex-column gap-4">
+                <span>
+                    <span><?= $about['long-bio'] ?></span>
+                </span>
+                <form action="store.php" method="POST" class="d-flex flex-column gap-4">
+                    <textarea type="text" rows="10" autocomplete="off" name="phone"
+                        placeholder="Enter your short bio..."
+                        class="form-control"><?= (!$admin['cel']) ? 'Not set yet' : '0' . $admin['cel']; ?></textarea>
+                    <input type="submit" class="btn btn-danger" value="change" name="editphone">
+                </form>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header d-flex justify-content-center align-items-center">
+                <h5>Change Your About picture</h5>
+            </div>
+            <div class="auth-info p-5 gap-5 d-flex flex-column align-items-center">
+                <div class="d-flex">
+                    <img class="img img-fluid" id="displayImg" style="max-width: 200px; height:100%;"
+                        src="../../public/uploads/profile/<?= $about['about-img'] ?>"
+                        alt="">
+                </div>
+                <div class="d-flex" style="max-width: 380px;">
+                    <form action="store.php" method="POST" enctype="multipart/form-data"
+                        class="d-flex justify-content-center align-items-center">
+                        <input type="file" name="avatar" class="form-control"
+                            onchange="document.getElementById('displayImg').src = window.URL.createObjectURL(this.files[0])">
+                        <input type="submit" class="btn btn-danger ms-4" value="change" name="editavatar">
+                    </form>
                 </div>
             </div>
         </div>

@@ -1,4 +1,5 @@
 <?php
+session_start();
 $css_path = './frontend/portfolio/css/';
 ?>
 

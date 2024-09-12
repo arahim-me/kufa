@@ -27,7 +27,7 @@ include "../master/header.php";
                                 <label for="exampleInputEmail1" class="form-label">Name</label>
                                 <input type="text" name="name" class="form-control" placeholder="Enter your brand name...">
                                 <picture class="d-block my-4 d-flex justify-content-center">
-                                    <img id="displayImg" src="../../public/uploads/brands/default.jpg" alt="Demo Image"
+                                    <img id="displayImg" src="../../public/uploads/brands/default.png" alt="Demo Image"
                                         style="width: 100%; height:300px; object-fit:contain;">
                                 </picture>
                                 <label for="exampleInputEmail1" class="form-label">Brand Logo</label>
@@ -50,13 +50,7 @@ include "../master/header.php";
 
 
 
-<script>
 
-    let input = document.querySelector('#inputIcon');
-    function myFun(e) {
-        input.value = e.target.classList.value;
-    }
-</script>
 
 <?php
 

@@ -1,7 +1,4 @@
 <?php
-session_start();
-
-
 include '../../../backend/config/db.php';
 
 if (isset($_POST['create'])) {

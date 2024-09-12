@@ -2,8 +2,9 @@
 session_start();
 
 if (isset($_SESSION['author_id'])) {
-    header("location: ../backend/home/home.php");
+    header('location: ../home/home.php');
 }
+
 ?>
 
 <?php $assets = './../assets/'; ?>

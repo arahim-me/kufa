@@ -3,6 +3,8 @@
 include "../master/header.php";
 include "../../public/fonts/fonts.php";
 
+
+
 ?>
 <div class="app-content">
     <div class="content-wrapper">
@@ -36,8 +38,8 @@ include "../../public/fonts/fonts.php";
                                     <input type="text" name="icon" class="form-control" id="inputIcon"
                                         placeholder="Search icon...." onchange="iconVal(event)">
                                     <div class="input-group-append">
-                                        <button id="searchBtn" class="btn btn-dark h-100"
-                                            type="submit" name="searchBtn" >Button</button>
+                                        <button id="searchBtn" class="btn btn-dark h-100" type="submit"
+                                            name="searchBtn">Button</button>
                                     </div>
                                 </div>
 

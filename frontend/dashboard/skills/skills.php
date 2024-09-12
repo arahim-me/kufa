@@ -2,8 +2,9 @@
 
 include '../../../backend/config/db.php';
 include "../master/header.php";
-$query = "SELECT * FROM admins";
-$admins = mysqli_query($db_connect, $query);
+
+$skill_query = "SELECT * FROM education";
+$skills = mysqli_query($db_connect, $skill_query);
 
 ?>
 
@@ -12,7 +13,7 @@ $admins = mysqli_query($db_connect, $query);
 <div class="row">
     <div class="col">
         <div class="page-description">
-            <h1>Dashboard</h1>
+            <h1>Your Skills</h1>
         </div>
     </div>
     <div class="col">
@@ -30,41 +31,55 @@ $admins = mysqli_query($db_connect, $query);
     <div class="col-12">
         <div class="card">
             <div class="card-header d-flex justify-content-between align-items-center">
-                <h5>Our Admins</h5>
+                <h5>Skills/ Education</h5>
+                <a href="createskill.php" name="createskill" class="btn btn-primary"><i
+                        class="material-icons">add</i>Create</a>
             </div>
             <div class="card-body">
                 <div class="example-content">
-                    <table class="table m-0">
+                    <table class="table m-0 bordered">
                         <thead class="table-dark">
                             <tr>
                                 <th scope="col">#</th>
-                                <th scope="col">Name</th>
-                                <th scope="col">Email</th>
-                                <th scope="col">Phone No.</th>
+                                <th scope="col">Status</th>
+                                <th scope="col">Degree</th>
+                                <th scope="col">Year</th>
+                                <th scope="col">Ratio</th>
                                 <th scope="col">Action</th>
                             </tr>
                         </thead>
                         <tbody>
                             <?php
                             $num = 1;
-                            foreach ($admins as $admin): ?>
+                            foreach ($skills as $skill): ?>
                                 <tr>
                                     <th scope="row">
                                         <?= $num++ ?>
                                     </th>
                                     <td>
-                                        <?= $admin['name'] ?>
-                                    </td>
-                                    <td>
-                                        <?= $admin['email'] ?>
-                                    </td>
-                                    <td>
-                                        <?= (!$admin['cel']) ? 'Not set yet' : '0' . $admin['cel'] ?>
-                                    </td>
-                                    <td>
-                                        <a href="store.php?delete=<?= $admin['id'] ?>" class="text-danger ms-3">
-                                            <i class="fa-2x fas fa-trash"></i>
+                                        <a href="store.php?skillstatus=<?= $skill['id'] ?>"
+                                            class="btn <?= ($skill['status'] == 'active') ? 'badge bg-success' : 'badge bg-danger' ?>">
+                                            <?= $skill['status'] ?>
                                         </a>
+                                    </td>
+                                    <td>
+                                        <?= $skill['degree'] ?>
+                                    </td>
+                                    <td>
+                                        <?= $skill['year'] ?>
+                                    </td>
+                                    <td>
+                                        <?= $skill['ratio'] ?> %
+                                    </td>
+                                    <td>
+                                        <div class="d-flex justify-content-around">
+                                            <a href="editskill.php?editskill=<?= $skill['id'] ?>" class="text-primary">
+                                                <i class="fa-2x fas fa-edit"></i>
+                                            </a>
+                                            <a href="store.php?deleteskill=<?= $skill['id'] ?>" class="text-danger ms-3">
+                                                <i class="fa-2x fas fa-trash"></i>
+                                            </a>
+                                        </div>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>

@@ -35,11 +35,11 @@ include "../../public/fonts/fonts.php";
                                 <textarea type="text" rows="5" name="description" class="form-control" id="description"
                                     placeholder="Project description..."></textarea>
                                 <picture class="d-block my-4 d-flex justify-content-center">
-                                    <img id="displayImg" src="../../public/uploads/projects/default.jpg"
+                                    <img id="displayImg" src="../../public/uploads/projects/default.png"
                                         alt="Demo Image" style="width: 100%; height:500px; object-fit:contain;">
                                 </picture>
                                 <label for="image" class="form-label">Project's image</label>
-                                <input type="file" name="image" class="form-control" id="inputIcon"
+                                <input type="file" name="image" class="form-control" id="image"
                                     placeholder="Project image..."
                                     onchange="document.getElementById('displayImg').src = window.URL.createObjectURL(this.files[0])">
 

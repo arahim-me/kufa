@@ -32,6 +32,24 @@ if (isset($_POST['create'])) {
     }
 }
 
+// if (isset($_POST['searchBtn'])) {
+//     function searchIcons($query, $icons)
+//     {
+//         $query = strtolower($query);
+//         return array_filter($icons, function ($icon) use ($query) {
+//             return strpos(strtolower($icon), $query) !== false;
+//         });
+//     }
+//     $userInput = $_POST['icon'];
+//     $results = searchIcons($userInput, $icons);
+//     header('location: ./create.php');
+// }
+
+
+
+// foreach ($results as $icons) {
+//     echo $icon;
+// }
 
 if (isset($_GET['id'])) {
     $id = $_GET['id'];

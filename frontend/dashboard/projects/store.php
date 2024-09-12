@@ -6,6 +6,7 @@ include '../../../backend/config/db.php';
 
 if (isset($_POST['create'])) {
 
+
     $title = $_POST['title'];
     $description = $_POST['description'];
     $category = $_POST['category'];
@@ -16,20 +17,14 @@ if (isset($_POST['create'])) {
     $img_name = date("d-m-Y") . "-" . time() . '.' . $extension;
     $localpath = "../../public/uploads/projects/" . $img_name;
 
-    if ($title && $description && $category) {
-        if ($title && $description && $category && $image) {
-            if (move_uploaded_file($tmp, $localpath)) {
-                $query = "INSERT INTO projects (title,description,category,image) VALUES ('$title','$description','$category', '$img_name')";
-                mysqli_query($db_connect, $query);
-                $_SESSION['create_success'] = "New Project Added Successfull!";
-                header('location: projects.php');
-            }
 
+    if ($title && $category && $description && $image) {
+        if (move_uploaded_file($tmp, $localpath)) {
+            $query = "INSERT INTO projects (title, category, description, image) VALUES ('$title', '$category', '$description','$img_name')";
+            mysqli_query($db_connect, $query);
+            $_SESSION['create_success'] = "New Project Added Successfull!";
+            header('location: projects.php');
         }
-
-    } else {
-        $_SESSION['create_fail'] = "New Project Added Fail!";
-        header('location: projects.php');
     }
 }
 
@@ -109,6 +104,19 @@ if (isset($_POST['update'])) {
             }
         }
 
+        if ($title && $description && $category && $image) {
+            if ($oldimage) {
+                if (file_exists($existspath)) {
+                    unlink($existspath);
+                }
+            }
+            if (move_uploaded_file($tmp, $localpath)) {
+                $query = "UPDATE projects SET title='$title', description='$description', category='$category' image='$new_img' WHERE id='$id'";
+                mysqli_query($db_connect, $query);
+                $_SESSION['update_success'] = "Project Updated Successfull!";
+                header('location: projects.php');
+            }
+        }
         if ($title && $description && $category && $image) {
             if ($oldimage) {
                 if (file_exists($existspath)) {

@@ -2,9 +2,9 @@
 session_start();
 $assets = '../assets/';
 
-if (!isset($_SESSION['author_id'])) {
-    header('location: ../authentication/login.php');
-}
+// if (!isset($_SESSION['author_id'])) {
+//     header('location: ../authentication/login.php');
+// }
 
 ?>
 
